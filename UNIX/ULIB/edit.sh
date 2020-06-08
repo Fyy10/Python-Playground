@@ -36,6 +36,92 @@ ADD()
 # 更新记录
 UPDATE()
 {
+    # save original IFS
+    ORI_IFS="$IFS"
+
+    # 清空变量
+    unset TITLE AUTHOR CATEGORY STATUS BNAME DATE
+    unset NEW_STATUS
+
+    # 是否继续循环
+    ANSWER=y
+    while [ "$ANSWER" = y ]; do
+        tput clear
+        tput cup 3 5; printf "Enter the title> "
+        read bookinfo
+        grep -i ":$bookinfo:" library > TMP
+        if [ -s TMP ]; then
+            IFS=":"
+            read tmp TITLE AUTHOR CATEGORY STATUS BNAME DATE < TMP
+            tput cup 5 10; echo "UNIX Library - ${BOLD}UPDATE STATUS MODE${NORMAL}"
+            tput cup 7 20; echo "Title: "
+            tput cup 8 20; echo "Author: "
+            tput cup 9 20; echo "Category: "
+            tput cup 10 20; echo "Status: "
+
+            # expand category
+            case $CATEGORY in
+                [Ss][Yy][Ss])word=textbook;;
+                [Rr][Ee][Ff])word=reference;;
+                [Tt][Bb])word=textbook;;
+                *)word=unknown;;
+            esac
+
+            tput cup 7 30; echo $TITLE
+            tput cup 8 30; echo $AUTHOR
+            tput cup 9 30; echo $word
+            tput cup 10 30; echo $STATUS
+
+            # new status
+            if [ "$STATUS" = "in" ]; then
+                NEW_STATUS="out"
+                DATE=`date +%D`
+                tput cup 11 15; echo "New status: "
+                tput cup 11 30; echo $NEW_STATUS
+                tput cup 12 10; printf "Checked out by: "
+                tput cup 12 30; read BNAME
+                tput cup 12 30; echo $BNAME
+                tput cup 13 20; echo "Date: "
+                tput cup 13 30; echo $DATE
+
+                # any more to update
+                tput cup 15 10
+            else
+                NEW_STATUS="in"
+                tput cup 11 10; echo "Checked out by: "
+                tput cup 11 30; echo $BNAME
+                tput cup 12 20; echo "Date: "
+                tput cup 12 30; echo $DATE
+                tput cup 14 15; echo "New status: "
+                tput cup 14 30; echo $NEW_STATUS
+                unset BNAME DATE
+
+                # any more to update
+                tput cup 15 10
+            fi
+
+            # update
+            grep -vi ":$bookinfo:" library > TMP_DELETE
+            mv TMP_DELETE library
+            echo ":$TITLE:$AUTHOR:$CATEGORY:$NEW_STATUS:$BNAME:$DATE" >> library
+
+        else
+            tput cup 7 10
+            echo "$bookinfo notfound"
+
+            # any more to update
+            tput cup 9 10
+        fi
+        rm TMP
+
+        printf "Any more to update? (Y)es or (N)o> "
+        read ANSWER
+        case $ANSWER in
+            [Yy])ANSWER=y;;
+            *)ANSWER=n;;
+        esac
+    done
+    IFS="$ORI_IFS"
     return 0
 }
 
@@ -49,13 +135,13 @@ DISPLAY()
     ANSWER=y
     while [ "$ANSWER" = y ]; do
         tput clear
-        tput cup 3 5; printf "Enter the author/title> "
+        tput cup 3 5; printf "Enter the title> "
         read bookinfo
         grep -i ":$bookinfo:" library > TMP
         if [ -s TMP ]; then
             IFS=":"
             read tmp TITLE AUTHOR CATEGORY STATUS BNAME DATE < TMP
-            tput cup 5 10; echo "UNIX Library - ${BOLD}DELETE MODE${NORMAL}"
+            tput cup 5 10; echo "UNIX Library - ${BOLD}DISPLAY MODE${NORMAL}"
             tput cup 7 20; echo "Title: "
             tput cup 8 20; echo "Author: "
             tput cup 9 20; echo "Category: "
@@ -83,7 +169,11 @@ DISPLAY()
             # any more to display
             tput cup 9 10
         fi
+
         rm TMP
+
+        # 在下一次循环前清空bookinfo变量
+        unset bookinfo
         printf "Any more to display? (Y)es or (N)o> "
         read ANSWER
         case $ANSWER in
@@ -145,7 +235,10 @@ DELETE()
             # any more to delete
             tput cup 9 10
         fi
-        rm TMP
+        [ -s "./TMP" ] && rm TMP
+
+        # 在下次循环前清空bookinfo变量
+        unset bookinfo
         printf "Any more to delete? (Y)es or (N)o> "
         read ANSWER
         case $ANSWER in
