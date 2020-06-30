@@ -11,4 +11,5 @@ from itemadapter import ItemAdapter
 class CrawlmikanPipeline:
     def process_item(self, item, spider):
         with open('magnet_links.txt', 'a+') as f:
-            f.write(item['magnet_link'] + '\n')
+            f.write(item['title'] + '\n')
+            f.write(item['magnet_link'] + '\n\n')

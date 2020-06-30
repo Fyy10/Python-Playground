@@ -8,4 +8,5 @@ import scrapy
 
 class CrawlmikanItem(scrapy.Item):
     # define the fields for your item here like:
+    title = scrapy.Field()
     magnet_link = scrapy.Field()

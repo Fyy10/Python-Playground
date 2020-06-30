@@ -11,5 +11,6 @@ class MikanSpider(scrapy.Spider):
         links = response.xpath('//tbody/tr')
         for link in links:
             item = CrawlmikanItem()
+            item['title'] = link.xpath('./td[3]/a[@class="magnet-link-wrap"]/text()').extract_first()
             item['magnet_link'] = link.xpath('./td/a/@data-clipboard-text').extract_first()
             yield item
