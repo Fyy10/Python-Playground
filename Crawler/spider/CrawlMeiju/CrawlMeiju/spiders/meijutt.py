@@ -1,0 +1,16 @@
+import scrapy
+
+from ..items import CrawlmeijuItem
+
+
+class MeijuttSpider(scrapy.Spider):
+    name = 'meijutt'
+    allowed_domains = ['meijutt.tv']
+    start_urls = ['https://www.meijutt.tv/new100.html']
+
+    def parse(self, response):
+        movies = response.xpath('//ul[@class="top-list  fn-clear"]/li')
+        for movie in movies:
+            item = CrawlmeijuItem()
+            item['title'] = movie.xpath('./h5/a/@title').extract_first()
+            yield item
