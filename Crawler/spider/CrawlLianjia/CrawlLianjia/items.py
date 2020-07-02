@@ -12,5 +12,5 @@ class CrawllianjiaItem(scrapy.Item):
 
 
 class DetailItem(scrapy.Item):
-    title = scrapy.Field()
+    area = scrapy.Field()
     price = scrapy.Field()

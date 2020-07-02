@@ -28,4 +28,5 @@ class CrawllianjiaPipeline:
             write_redis(self.redis_obj, item)
         elif isinstance(item, DetailItem):
             with open('Details.txt', 'a+') as f:
-                f.write('{} {}\n'.format(item['title'], item['price']))
+                # split by ','
+                f.write('{},{}\n'.format(item['area'], item['price']))

@@ -11,6 +11,6 @@ class LianjiadetailSpider(RedisCrawlSpider):
 
     def parse(self, response):
         item = DetailItem()
-        item['title'] = response.xpath('//div[@class="title"]/h1[@class="main"]/@title').extract_first()
+        item['area'] = response.xpath('//div[@class="areaName"]/span[@class="info"]/a[1]/text()').extract_first()
         item['price'] = response.xpath('//span[@class="unitPriceValue"]/text()').extract_first()
         yield item
