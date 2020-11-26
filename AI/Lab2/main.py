@@ -40,16 +40,18 @@ def main():
     # print(label_test.shape)
 
     test_num = 10
-    acc = 0
+    acc = np.zeros(test_num)
     tmp_acc = 0
     for i in range(test_num):
         model = DoubleLayerNN(in_feat=4, hidden_feat=10, out_feat=3)
         model.train(data_train, label_train, lr=4e-3, batch_size=50, num_batch=2000, verbose=False)
         tmp_acc = model.test_acc(data_test, label_test)
         print('Test {}, accuracy: {:4f}'.format(i, tmp_acc))
-        acc += tmp_acc / test_num
+        # acc += tmp_acc / test_num
+        acc[i] = tmp_acc
 
-    print('Average test accuracy: {:4f}'.format(acc))
+    print('Average test accuracy: {:4f}'.format(acc.mean()))
+    print('Standard deviation: {:4f}'.format(acc.std()))
 
 
 if __name__ == '__main__':
