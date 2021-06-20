@@ -19,6 +19,10 @@
 # beq/bne rs rt offset
 # jump target
 
+
+import re
+
+
 # convert hex to bin of a certain length (with 0 extend)
 def convert(data, length):
     data_bin = bin(int(data, 16))[2:]
@@ -57,6 +61,7 @@ func_map = {
 
 
 def gen_code(code: str):
+    code = re.sub('[(),]', ' ', code)   # replace '(' ')' ',' to ' '
     code = code.split()
     # print(code)
     op = op_map[code[0]]

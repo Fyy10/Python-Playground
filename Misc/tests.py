@@ -44,6 +44,33 @@ class MipsGenCodeTest(unittest.TestCase):
             """
         self.compareMultipleCode(mips_code, binary_code)
 
+    def test_for_removing_brackets_and_commas_in_mips(self):
+        mips_code = \
+            """
+            add     r1, r2, r3
+            add     r4, r1, r2
+            and     r6, r5, r1
+            load    r1, 0xfffe(r7)
+            sll     r8, r1, 1
+            store   r8, 0x5c(r2)
+            beq     r1, r1, 4
+            addi    r1, r1, 1
+            addi    r3, r1, 2
+            """
+        binary_code = \
+            """
+            0x00100443
+            0x00101022
+            0x041018a1
+            0x37fff8e1
+            0x0830a001
+            0x38017048
+            0x3c001021
+            0x14000421
+            0x14000823
+            """
+        self.compareMultipleCode(mips_code, binary_code)
+
 
 if __name__ == '__main__':
     unittest.main()
