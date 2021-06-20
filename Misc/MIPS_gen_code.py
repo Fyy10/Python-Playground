@@ -55,10 +55,8 @@ func_map = {
     'sll': '000011'
 }
 
-while True:
-    code = input()
-    if code == 'exit':
-        break
+
+def gen_code(code: str):
     code = code.split()
     # print(code)
     op = op_map[code[0]]
@@ -98,8 +96,16 @@ while True:
         addr = convert(code[1], 26)
         machine_code = op + addr
     else:
-        print('Invalid Instruction')
+        raise ValueError('Invalid Instruction')
     # print(machine_code)
     machine_code = hex(int(machine_code, 2))[2:]
     machine_code = machine_code.rjust(8, '0')
-    print('0x' + machine_code)
+    return '0x' + machine_code
+
+
+if __name__ == '__main__':
+    while True:
+        code = input()
+        if code == 'exit':
+            break
+        print(gen_code(code))
