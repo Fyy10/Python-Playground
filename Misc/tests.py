@@ -1,5 +1,6 @@
 # Unit Tests for MIPS_gen_code.py
-# usage: python -m unittest tests
+# usage: python -m unittest tests.py -v
+# or:    python tests.py -v
 
 import unittest
 
@@ -18,6 +19,9 @@ class MipsGenCodeTest(unittest.TestCase):
             self.assertEqual(gen_code(mips), binary)
 
     def test1(self):
+        self.assertEqual(gen_code('add     r1 r2 r3'), '0x00100443')
+
+    def test2(self):
         mips_code = \
             """
             add     r1 r2 r3
@@ -45,7 +49,7 @@ class MipsGenCodeTest(unittest.TestCase):
         self.compareMultipleCode(mips_code, binary_code)
 
     def test_for_removing_brackets_and_commas_in_mips(self):
-        mips_code = \
+        mips_code1 = \
             """
             add     r1, r2, r3
             add     r4, r1, r2
@@ -56,6 +60,18 @@ class MipsGenCodeTest(unittest.TestCase):
             beq     r1, r1, 4
             addi    r1, r1, 1
             addi    r3, r1, 2
+            """
+        mips_code2 = \
+            """
+            add     r1 , r2 , r3
+            add     r4 , r1 , r2
+            and     r6 , r5 , r1
+            load    r1 , 0xfffe ( r7 )
+            sll     r8 , r1 , 1
+            store   r8,0x5c(r2)
+            beq     r1 ,r1, 4
+            addi    r1 ,r1, 1
+            addi    r3 ,r1, 2
             """
         binary_code = \
             """
@@ -69,7 +85,8 @@ class MipsGenCodeTest(unittest.TestCase):
             0x14000421
             0x14000823
             """
-        self.compareMultipleCode(mips_code, binary_code)
+        self.compareMultipleCode(mips_code1, binary_code)
+        self.compareMultipleCode(mips_code2, binary_code)
 
 
 if __name__ == '__main__':
