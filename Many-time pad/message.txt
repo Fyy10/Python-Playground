@@ -1,0 +1,18 @@
+Apparently, not only did the NSA exist, but it was considered 
+It had been gathering global electronic intelligence data and 
+Only 3 percent of Americans were even aware it existed.
+"NSA," his buddy joked, "stands for 'No Such Agency.' "
+With a mixture of apprehension and curiosity, Becker accepted 
+He drove the thirty-seven miles to their eighty-six-acre headq
+After passing through endless security checks and being issued
+he was escorted to a plush research facility where he was told
+an elite group of mathematical brainiacs known as the code-bre
+For the first hour, the cryptographers seemed unaware Becker w
+They hovered around an enormous table and spoke a language Bec
+They spoke of stream ciphers, self-decimated generators, knaps
+Becker observed, lost.
+They scrawled symbols on graph paper, pored over computer prin
+
+   Congratulations, you have gotten this far.  But you're not 
+   You can find the rest of the homework problems here:
+   https://cseweb.ucsd.edu/classes/fa23/cse207B-a/hw1/hw1.pdf
