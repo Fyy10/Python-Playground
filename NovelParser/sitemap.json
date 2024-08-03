@@ -1,0 +1,28 @@
+{
+  "_id": "ddxss",
+  "startUrl": [
+    "https://www.ddxss.cc/book/2517/"
+  ],
+  "selectors": [
+    {
+      "id": "title-link",
+      "parentSelectors": [
+        "_root"
+      ],
+      "type": "SelectorLink",
+      "selector": ".listmain dl > dd a, .dd_hide a",
+      "multiple": true,
+      "linkType": "linkFromHref"
+    },
+    {
+      "id": "chapter-text",
+      "parentSelectors": [
+        "title-link"
+      ],
+      "type": "SelectorText",
+      "selector": "div.Readarea",
+      "multiple": false,
+      "regex": ""
+    }
+  ]
+}
