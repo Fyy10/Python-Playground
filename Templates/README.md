@@ -1,5 +1,12 @@
 # Templates
 
+- [Templates](#templates)
+  - [Graph Algorithms](#graph-algorithms)
+  - [String Algorithms](#string-algorithms)
+  - [Tree And Range Query Structures](#tree-and-range-query-structures)
+  - [Linear Data Structures](#linear-data-structures)
+  - [Selection Algorithms](#selection-algorithms)
+
 Reusable Python templates for common data structures and algorithms.
 
 ## Graph Algorithms
